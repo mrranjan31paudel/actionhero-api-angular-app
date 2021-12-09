@@ -1,6 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpParamsOptions } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +11,17 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts() {
-    return this.http.get<any>('http://localhost:8080/api/products');
+  getProducts(sort: any, filters: any) {
+
+    return this.http.get<any>(
+      `${environment.baseApiUrl}/products`,
+      {
+        params: {
+          ...sort,
+          ...filters
+        }
+      }
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

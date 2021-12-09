@@ -6,8 +6,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
 import { CdkColumnDef } from '@angular/cdk/table';
+import { MatSortModule } from '@angular/material/sort';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +19,8 @@ import { SalesComponent } from './sales/sales.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductsService } from './products.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,11 @@ import { ProductsService } from './products.service';
     MatIconModule,
     MatButtonModule,
     MatListModule,
-    MatTableModule
+    MatTableModule,
+    MatInputModule,
+    MatSortModule,
+    MatFormFieldModule,
+    ReactiveFormsModule
   ],
   providers: [
     ProductsService,

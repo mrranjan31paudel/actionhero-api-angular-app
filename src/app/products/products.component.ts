@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { Sort } from '@angular/material/sort';
+import { catchError, throwError } from 'rxjs';
+
 import { ProductsService } from '../products.service';
 
 @Component({
@@ -14,6 +17,13 @@ export class ProductsComponent implements OnInit {
   isLoading: boolean = false;
   failedToFetch: boolean = false;
   fallBack: any = 'No records!';
+  sort: Sort = { active: '', direction: '' };
+  codeFormControl = new FormControl('');
+  nameFormControl = new FormControl('');
+  vendorFormControl = new FormControl('');
+  qty_in_storeFormControl = new FormControl('');
+  rateFormControl = new FormControl('');
+  unitFormControl = new FormControl('');
 
   constructor(private productService: ProductsService) {
 
@@ -23,11 +33,41 @@ export class ProductsComponent implements OnInit {
     this.getProducts();
   }
 
+  prepareFilters() {
+    return {
+      code: this.codeFormControl.value,
+      name: this.nameFormControl.value,
+      vendor: this.vendorFormControl.value,
+      qty_in_store: this.qty_in_storeFormControl.value,
+      rate: this.rateFormControl.value,
+      unit: this.unitFormControl.value
+    }
+  }
+
+  prepareSort(sort?: Sort) {
+    return {
+      sortBy: this.sort.active,
+      sortDir: this.sort.direction
+    };
+  }
+
+  onSortChange(sortEvent: Sort) {
+    this.sort = sortEvent;
+    this.getProducts();
+  }
+
+  onFilterChange(e: Event) {
+    this.getProducts();
+  }
+
   getProducts() {
+    let sort = this.prepareSort();
+    let filters = this.prepareFilters();
+
     this.isLoading = true;
     this.fallBack = 'Loading...';
 
-    return this.productService.getProducts()
+    return this.productService.getProducts(sort, filters)
       .pipe(catchError((err, caught) => {
         this.failedToFetch = true;
         this.isLoading = false;

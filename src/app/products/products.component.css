@@ -7,3 +7,10 @@ table {
 .num-col {
   text-align: right;
 }
+
+mat-header-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 8px;
+}
