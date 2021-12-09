@@ -1,0 +1,11 @@
+.mat-nav-list.horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
+.mat-nav-list > .mat-list-item {
+  color: white;
+}
+.mat-nav-list > .mat-list-item.active {
+  background-color: #00000050;
+}
