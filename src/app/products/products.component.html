@@ -3,90 +3,95 @@
   <mat-divider></mat-divider>
 </div>
 
-<mat-table [dataSource]="products" matSort (matSortChange)="onSortChange($event)" matSortDisabled="{{isLoading}}"
-  class="mat-elevation-z4">
-  <!-- Code Column -->
-  <ng-container matColumnDef="code">
-    <mat-header-cell mat-primary *matHeaderCellDef>
-      <div mat-sort-header sortActionDescription="Sort by Code">
-        Code
-      </div>
-      <mat-form-field appearance="outline">
-        <input matInput type="text" [formControl]="codeFormControl" name="code" (change)="onFilterChange($event)">
-      </mat-form-field>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.code}} </mat-cell>
-  </ng-container>
+<div class="mat-elevation-z4">
+  <mat-table [dataSource]="products" matSort (matSortChange)="onSortChange($event)" matSortDisabled="{{isLoading}}">
+    <!-- Code Column -->
+    <ng-container matColumnDef="code">
+      <mat-header-cell mat-primary *matHeaderCellDef>
+        <div mat-sort-header sortActionDescription="Sort by Code">
+          Code
+        </div>
+        <mat-form-field appearance="outline">
+          <input matInput type="text" [formControl]="codeFormControl" name="code" (change)="onFilterChange($event)">
+        </mat-form-field>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.code}} </mat-cell>
+    </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef>
-      <div mat-sort-header sortActionDescription="Sort by Name">
-        Name
-      </div>
-      <mat-form-field appearance="outline">
-        <input matInput type="text" [formControl]="nameFormControl" name="name" (change)="onFilterChange($event)">
-      </mat-form-field>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-  </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>
+        <div mat-sort-header sortActionDescription="Sort by Name">
+          Name
+        </div>
+        <mat-form-field appearance="outline">
+          <input matInput type="text" [formControl]="nameFormControl" name="name" (change)="onFilterChange($event)">
+        </mat-form-field>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
 
-  <!-- Vendor Column -->
-  <ng-container matColumnDef="vendor">
-    <mat-header-cell *matHeaderCellDef>
-      <div mat-sort-header sortActionDescription="Sort by Vendor">
-        Vendor
-      </div>
-      <mat-form-field appearance="outline">
-        <input matInput type="text" [formControl]="vendorFormControl" name="vendor" (change)="onFilterChange($event)">
-      </mat-form-field>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.vendor}} </mat-cell>
-  </ng-container>
+    <!-- Vendor Column -->
+    <ng-container matColumnDef="vendor">
+      <mat-header-cell *matHeaderCellDef>
+        <div mat-sort-header sortActionDescription="Sort by Vendor">
+          Vendor
+        </div>
+        <mat-form-field appearance="outline">
+          <input matInput type="text" [formControl]="vendorFormControl" name="vendor" (change)="onFilterChange($event)">
+        </mat-form-field>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.vendor}} </mat-cell>
+    </ng-container>
 
-  <!-- Quantity Column -->
-  <ng-container matColumnDef="qty_in_store">
-    <mat-header-cell *matHeaderCellDef>
-      <div mat-sort-header sortActionDescription="Sort by Quantity">
-        Quantity
-      </div>
-      <mat-form-field appearance="outline">
-        <input matInput type="text" [formControl]="qty_in_storeFormControl" name="qty_in_store"
-          (change)="onFilterChange($event)">
-      </mat-form-field>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let element" class="num-col"> {{element.qty_in_store}} </mat-cell>
-  </ng-container>
+    <!-- Quantity Column -->
+    <ng-container matColumnDef="qty_in_store">
+      <mat-header-cell *matHeaderCellDef>
+        <div mat-sort-header sortActionDescription="Sort by Quantity">
+          Quantity
+        </div>
+        <mat-form-field appearance="outline">
+          <input matInput type="text" [formControl]="qty_in_storeFormControl" name="qty_in_store"
+            (change)="onFilterChange($event)">
+        </mat-form-field>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="num-col"> {{element.qty_in_store}} </mat-cell>
+    </ng-container>
 
-  <!-- Rate Column -->
-  <ng-container matColumnDef="rate">
-    <mat-header-cell *matHeaderCellDef>
-      <div mat-sort-header sortActionDescription="Sort by Rate">
-        Rate
-      </div>
-      <mat-form-field appearance="outline">
-        <input matInput type="text" [formControl]="rateFormControl" name="rate" (change)="onFilterChange($event)">
-      </mat-form-field>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let element" class="num-col"> {{element.rate}} </mat-cell>
-  </ng-container>
+    <!-- Rate Column -->
+    <ng-container matColumnDef="rate">
+      <mat-header-cell *matHeaderCellDef>
+        <div mat-sort-header sortActionDescription="Sort by Rate">
+          Rate
+        </div>
+        <mat-form-field appearance="outline">
+          <input matInput type="text" [formControl]="rateFormControl" name="rate" (change)="onFilterChange($event)">
+        </mat-form-field>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="num-col"> {{element.rate}} </mat-cell>
+    </ng-container>
 
-  <!-- Unit Column -->
-  <ng-container matColumnDef="unit">
-    <mat-header-cell *matHeaderCellDef>
-      <div mat-sort-header sortActionDescription="Sort by Unit">
-        Unit
-      </div>
-      <mat-form-field appearance="outline">
-        <input matInput type="text" [formControl]="unitFormControl" name="unit" (change)="onFilterChange($event)">
-      </mat-form-field>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.unit}} </mat-cell>
-  </ng-container>
+    <!-- Unit Column -->
+    <ng-container matColumnDef="unit">
+      <mat-header-cell *matHeaderCellDef>
+        <div mat-sort-header sortActionDescription="Sort by Unit">
+          Unit
+        </div>
+        <mat-form-field appearance="outline">
+          <input matInput type="text" [formControl]="unitFormControl" name="unit" (change)="onFilterChange($event)">
+        </mat-form-field>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.unit}} </mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="productColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: productColumns;"></mat-row>
-</mat-table>
+    <mat-header-row *matHeaderRowDef="productColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: productColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" [pageSize]="recordsPerPage" [length]="totalRecords"
+    (page)="onPageChange($event)" [pageIndex]="currentPage" showFirstLastButtons>
+  </mat-paginator>
+</div>
 
 <div *ngIf="fallBack !== null" class="center-al {{failedToFetch ? 'mat-primary' : ''}}">
   {{fallBack}}
