@@ -11,14 +11,16 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(sort: any, filters: any) {
+  getProducts(sort: any, filters: any, pageNum: number, pageSize?: number) {
 
     return this.http.get<any>(
       `${environment.baseApiUrl}/products`,
       {
         params: {
           ...sort,
-          ...filters
+          ...filters,
+          pageNum: pageNum,
+          pageSize: pageSize || 25
         }
       }
     );

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { catchError, throwError } from 'rxjs';
 
@@ -24,6 +25,9 @@ export class ProductsComponent implements OnInit {
   qty_in_storeFormControl = new FormControl('');
   rateFormControl = new FormControl('');
   unitFormControl = new FormControl('');
+  currentPage: number = 0;
+  recordsPerPage: number = 25;
+  totalRecords: number = 0;
 
   constructor(private productService: ProductsService) {
 
@@ -51,12 +55,23 @@ export class ProductsComponent implements OnInit {
     };
   }
 
+  preparePagination(currentPage: number = 0, recordsPerPage: number = 25) {
+    this.currentPage = currentPage;
+    this.recordsPerPage = recordsPerPage;
+  }
+
   onSortChange(sortEvent: Sort) {
     this.sort = sortEvent;
     this.getProducts();
   }
 
   onFilterChange(e: Event) {
+    this.preparePagination(0, this.recordsPerPage); // reset currentpage on filterchange
+    this.getProducts();
+  }
+
+  onPageChange(pageEvent: PageEvent) {
+    this.preparePagination(pageEvent.pageIndex, pageEvent.pageSize);
     this.getProducts();
   }
 
@@ -67,7 +82,7 @@ export class ProductsComponent implements OnInit {
     this.isLoading = true;
     this.fallBack = 'Loading...';
 
-    return this.productService.getProducts(sort, filters)
+    return this.productService.getProducts(sort, filters, this.currentPage, this.recordsPerPage)
       .pipe(catchError((err, caught) => {
         this.failedToFetch = true;
         this.isLoading = false;
@@ -75,12 +90,18 @@ export class ProductsComponent implements OnInit {
 
         return throwError(() => new Error(err.message));
       }))
-      .subscribe((res: { data: any[] }) => {
-        this.isLoading = false;
-        this.products = res.data;
+      .subscribe((res: { data: { records: any[], pagination: any } }) => {
+        const { records, pagination } = res.data;
 
-        if (res.data && res.data.length !== undefined && res.data.length > 0) {
+        this.isLoading = false;
+        this.products = res.data.records;
+
+        if (records && records.length !== undefined && records.length > 0) {
           this.fallBack = null;
+          if (pagination) {
+            this.currentPage = pagination.currentPageNum;
+            this.totalRecords = pagination.totalRecords;
+          }
         }
         else {
           this.fallBack = 'No records!';
