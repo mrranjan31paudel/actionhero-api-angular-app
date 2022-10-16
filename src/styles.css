@@ -8,3 +8,19 @@ app-root {
   flex-direction: column;
   height: 100vh;
 }
+
+.scrollable-x-content-wrapper  {
+  overflow-x: auto
+}
+
+.scrollable-y-content-wrapper  {
+  overflow-y: auto
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+.fullheight {
+  height: 100%;
+}

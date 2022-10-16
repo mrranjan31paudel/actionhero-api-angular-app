@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CdkColumnDef } from '@angular/cdk/table';
 import { MatSortModule } from '@angular/material/sort';
 
@@ -20,8 +20,11 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductsService } from './products.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { LoginComponent } from './login/login.component';
+import { LoginService } from './login.service';
+import { AuthInterceptor } from './http-interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ProductsComponent,
     SalesComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -46,11 +50,18 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSortModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FormsModule
   ],
   providers: [
     ProductsService,
-    CdkColumnDef
+    LoginService,
+    CdkColumnDef,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
